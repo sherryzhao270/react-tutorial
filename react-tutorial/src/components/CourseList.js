@@ -1,5 +1,5 @@
 import CourseCard from './CourseCard';
-import './CourseList.css'
+import './CourseList.css';
 
 const CourseList = ({courses, selection, selected, toggleSelected}) => {
     let courseKeys = Object.keys(courses);
