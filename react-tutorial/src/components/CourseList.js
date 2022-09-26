@@ -1,15 +1,19 @@
 import CourseCard from './CourseCard';
 import './CourseList.css'
 
-const CourseList = ({courses, selection}) => {
+const CourseList = ({courses, selection, selected, toggleSelected}) => {
     let courseKeys = Object.keys(courses);
     return <div className="course-list"> 
-        {courseKeys.map((key, i) => 
-            selection === courses[key].term &&
+        {courseKeys.map((id, i) => 
+            selection === courses[id].term &&
             <CourseCard key = {i}
-                        title={`${courses[key].term} CS ${courses[key].number}`}
-                        name={courses[key].title}
-                        time={courses[key].meets}
+                        id = {id}
+                        title={`${courses[id].term} CS ${courses[id].number}`}
+                        name={courses[id].title}
+                        time={courses[id].meets}
+                        selection={selection} 
+                        selected={selected}
+                        toggleSelected={toggleSelected}
             />
         )} 
     </div>
