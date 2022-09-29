@@ -3,18 +3,32 @@ import CourseList from "./CourseList";
 import Modal from './Modal';
 import { useState } from "react";
 import './TermPage.css';
+import { catchTimeConflicts } from "../utilities/catchTimeConflicts";
 
 const TermPage = ({courses}) => {
     const [selectedTerm, setSelectedTerm] = useState('Fall');
     const [selectedCourses, setselectedCourses] = useState([]);
     const [coursePlanOpened, setCoursePlanOpened] = useState(false);
+    const [confiltedCourses, setConfiltedCourses] = useState([])
 
-    const toggleSelected = (item) => setselectedCourses(
-        selectedCourses.includes(item)
-        ? selectedCourses.filter(x => x !== item)
-        : [...selectedCourses, item]
-    );
+    const toggleSelected = (item) => {
+        
+        if (!confiltedCourses.includes(item)) {
+            setselectedCourses(
+                selectedCourses.includes(item)
+                ? selectedCourses.filter(x => x !== item)
+                : [...selectedCourses, item]
+            );
 
+            let conflicts = catchTimeConflicts(courses, item);
+            setConfiltedCourses (
+                selectedCourses.includes(item)
+                ? confiltedCourses.filter(course => !conflicts.includes(course))
+                : confiltedCourses.concat(conflicts)
+            )   
+        }    
+    }
+    
     const openCoursePlan = () => setCoursePlanOpened(true);
     const closeCoursePlan = () => setCoursePlanOpened(false);
 
@@ -35,7 +49,7 @@ const TermPage = ({courses}) => {
                     }
                 </div>
             </Modal>
-            <CourseList courses={courses} selection={selectedTerm} selected={selectedCourses} toggleSelected={toggleSelected}/>
+            <CourseList courses={courses} selection={selectedTerm} selected={selectedCourses} toggleSelected={toggleSelected} confiltedCourses={confiltedCourses}/>
         </div>
     
     )
