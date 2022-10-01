@@ -36,3 +36,12 @@ const atSameTime = (time1, time2) => {
 const onSameDate = (dates1, dates2) => dates1.some(date => dates2.includes(date));
 const inSameTerm = (term1, term2) => term1 === term2
 
+
+// module.exports = {
+//     onSameDate,
+//     inSameTerm,
+//     atSameTime,
+//     compareTime,
+//     timeIsConflicted,
+//     catchTimeConflicts  
+//  }
