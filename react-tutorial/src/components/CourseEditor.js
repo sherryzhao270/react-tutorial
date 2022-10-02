@@ -1,4 +1,5 @@
 import { useFormData } from '../utilities/useFormData';
+import { useDbUpdate } from '../utilities/firebase';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { compareTime } from '../utilities/catchTimeConflicts';
 
@@ -43,7 +44,7 @@ const ButtonBar = ({message, disabled}) => {
 
 const CourseEditor = () => {
   let location = useLocation();
-  //const [update, result] = useDbUpdate(`/users/${user.id}`);
+  const [update, result] = useDbUpdate(`/course/${location.state.id}`);
   const [state, setState] = useFormData(validateUserData, location.state);
   
   return (<section>
