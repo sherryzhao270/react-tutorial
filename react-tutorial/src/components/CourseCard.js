@@ -6,7 +6,7 @@ const CourseCard = ({id, title, name, time, selected, toggleSelected, confiltedC
 
     let navigate = useNavigate(); 
     const gotoCourseForm = (id) =>{ 
-        let path = `/course/${id}`; 
+        let path = `/courses/${id}`; 
         navigate(path,
             {state: {
                 id: id,

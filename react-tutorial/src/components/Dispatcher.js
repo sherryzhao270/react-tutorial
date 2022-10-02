@@ -6,7 +6,7 @@ const Dispatcher = () => (
   <BrowserRouter>
     <Routes>
       <Route path="/" element={<Main />} />
-      <Route path="/course/:id" element={<CourseEditor />} />
+      <Route path="/courses/:id" element={<CourseEditor />} />
     </Routes>
   </BrowserRouter>
 );

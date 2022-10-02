@@ -44,15 +44,23 @@ const ButtonBar = ({message, disabled}) => {
 
 const CourseEditor = () => {
   let location = useLocation();
-  const [update, result] = useDbUpdate(`/course/${location.state.id}`);
+  const [update, result] = useDbUpdate(`/courses/${location.state.id}`);
   const [state, setState] = useFormData(validateUserData, location.state);
+
+  const submit = (evt) => {
+    evt.preventDefault();
+    if (!state.errors) {
+      update(state.values);
+      location.state = state.values
+    }
+  };
   
   return (<section>
       <h2>{location.state.code}</h2>
-      <form onSubmit={console.log('submitted')} noValidate className={state.errors ? 'was-validated' : null}>
+      <form onSubmit={submit} noValidate className={state.errors ? 'was-validated' : null}>
         <InputField name="title" text="Course title" state={state} change={setState} />
         <InputField name="meets" text="Meeting times" state={state} change={setState} />
-        <ButtonBar/>
+        <ButtonBar message={result?.message} disabled={state.errors || JSON.stringify(state.values) === JSON.stringify(location.state)}/>
       </form>
     </section>
   )
