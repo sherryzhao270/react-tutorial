@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 export const useFormData = (validator = null, values = {}) => {
   const [state, setState] = useState(() => ({ values }));
-  console.log('useFormData', state)
 
   const change = (evt) => {
     const { id, value } = evt.target;

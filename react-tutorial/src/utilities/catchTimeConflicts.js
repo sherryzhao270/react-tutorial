@@ -16,7 +16,7 @@ const timeIsConflicted = (course1, course2) => {
         && atSameTime(time1, time2)
 }
 
-const compareTime = (time1, time2) => {
+export const compareTime = (time1, time2) => {
     const [h1, m1] = time1.split(':').map(x => parseInt(x, 10));
     const [h2, m2] = time2.split(':').map(x => parseInt(x, 10));
     return h1 > h2 ? 1 : h1 < h2 ? -1 : m1 > m2 ? 1 : m1 < m2 ? -1 : 0
