@@ -41,7 +41,7 @@ const TermPage = ({courses}) => {
             <Modal open={coursePlanOpened} close={closeCoursePlan}>
                 <div>
                     {selectedCourses.length > 0 
-                    ? selectedCourses.map(selectedCourse => <div>{` CS ${courses[selectedCourse].number} ${courses[selectedCourse].title} ${courses[selectedCourse].meets}`} </div>)
+                    ? selectedCourses.map((selectedCourse, i) => <div key={i}>{` CS ${courses[selectedCourse].number} ${courses[selectedCourse].title} ${courses[selectedCourse].meets}`} </div>)
                     : <div>
                         <div>No course is selected.</div>
                         <div>Clicking on a course card to select the course.</div>
