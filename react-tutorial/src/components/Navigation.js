@@ -16,10 +16,14 @@ const AuthButton = () => {
 
 const activation = ({isActive}) => isActive ? 'active' : 'inactive';
 
-const Navigation = () => (
-    <nav className="d-flex">
-        <AuthButton />
-    </nav>
-);
+const Navigation = () => {
+    return (
+        <nav className="d-flex bd-highlight mb-3">
+            <NavLink to="/" className={`${activation} p-2 bd-highlight`} end>Courses</NavLink>
+            <NavLink to="/users" className={`${activation} p-2 bd-highlight`} end>User</NavLink>
+            <AuthButton className="ms-auto p-2 bd-highlight"/>
+        </nav>
+    );
+};
 
 export default Navigation;
