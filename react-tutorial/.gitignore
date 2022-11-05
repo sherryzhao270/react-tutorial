@@ -8,6 +8,7 @@
 # testing
 /coverage
 /src/tests
+/saved-data
 
 # production
 /build
