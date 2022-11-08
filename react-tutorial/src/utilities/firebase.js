@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 import { initializeApp } from "firebase/app";
-import { getDatabase, onValue, ref, update } from 'firebase/database';
-import { getAuth, GoogleAuthProvider, onAuthStateChanged, signInWithPopup, signOut } from 'firebase/auth';
+import { getDatabase, onValue, ref, update, connectDatabaseEmulator } from 'firebase/database';
+import { getAuth, GoogleAuthProvider, signInWithCredential, onAuthStateChanged, signInWithPopup, signOut, connectAuthEmulator } from 'firebase/auth';
 
 const firebaseConfig = {
   apiKey: "AIzaSyCAJPuHPk8DG59Q8Qt4x8z2aHObA137cxU",
@@ -15,6 +15,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const firebase = initializeApp(firebaseConfig);
+const auth = getAuth(firebase);
 const database = getDatabase(firebase);
 
 export const useDbData = (path) => {
@@ -23,13 +24,13 @@ export const useDbData = (path) => {
 
   useEffect(() => (
     onValue(ref(database, path), (snapshot) => {
-     setData( snapshot.val() );
+      setData(snapshot.val());
     }, (error) => {
       setError(error);
     })
-  ), [ path ]);
+  ), [path]);
 
-  return [ data, error ];
+  return [data, error];
 };
 
 const makeResult = (error) => {
@@ -42,8 +43,8 @@ export const useDbUpdate = (path) => {
   const [result, setResult] = useState();
   const updateData = useCallback((value) => {
     update(ref(database, path), value)
-    .then(() => setResult(makeResult()))
-    .catch((error) => setResult(makeResult(error)))
+      .then(() => setResult(makeResult()))
+      .catch((error) => setResult(makeResult(error)))
   }, [database, path]);
 
   return [updateData, result];
@@ -59,10 +60,21 @@ export { firebaseSignOut as signOut };
 
 export const useAuthState = () => {
   const [user, setUser] = useState();
-  
+
   useEffect(() => (
     onAuthStateChanged(getAuth(firebase), setUser)
   ));
 
   return [user];
 };
+
+
+if (process.env.REACT_APP_EMULATE) {
+
+  connectAuthEmulator(auth, "http://127.0.0.1:9099");
+  connectDatabaseEmulator(database, "127.0.0.1", 9000);
+
+  signInWithCredential(auth, GoogleAuthProvider.credential(
+    '{"sub": "61rG49a7hiToL8mAhnnp5bk0ksQ8", "email": "tester@gmail.com", "displayName":"Test User", "email_verified": true, "password":"123456"}'
+  ));
+}
